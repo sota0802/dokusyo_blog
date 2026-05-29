@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>読書日記アプリ</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js"></script>
+</head>
+<body>
+
+  <header class="app-header">
+    <h1>読書日記</h1>
+  </header>
+
+  <main class="app-container">
+
+    <section class="form-section">
+      <h2>新しい日記を書く</h2>
+      <form id="diary-form">
+        <div class="form-group">
+          <label for="title">本のタイトル</label>
+          <input type="text" id="title" placeholder="例: 走れメロス" required>
+        </div>
+
+        <div class="form-group">
+          <label for="author">著者名</label>
+          <input type="text" id="author" placeholder="例: 太宰治">
+        </div>
+
+        <div class="form-group">
+          <label for="rating">評価</label>
+          <select id="rating">
+            <option value="5">★★★★★ (5)</option>
+            <option value="4">★★★★☆ (4)</option>
+            <option value="3">★★★☆☆ (3)</option>
+            <option value="2">★★☆☆☆ (2)</option>
+            <option value="1">★☆☆☆☆ (1)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="impression">感想</label>
+          <textarea id="impression" rows="5" placeholder="心に残ったフレーズや感想を記入" required></textarea>
+        </div>
+
+        <button id="save-btn" type="submit" class="btn btn-primary">日記を保存する</button>
+      </form>
+    </section>
+
+    <section class="list-section">
+      <h2>これまでに読んだ本</h2>
+      <div class="diary-list" id="list-diary">
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
