@@ -33,6 +33,24 @@ app.post('/api/diaries', (req,res) => {
 
 });
 
+// 【DELETE】特定の日記を削除するルート
+app.delete('/api/diaries/:id',(req, res) => {
+  // URLから削除したい日記のIDを取得する (例: "/api/diaries/2" なら id は 2)
+  const deleteID = Number(req.params.id);
+
+  // 指定されたID以外のデータだけで、新しい配列を作り直す（＝指定されたIDが消える）
+  const initialLength = diaries.length;
+  diaries = diaries.filter(diary => diary.id !== deleteID);
+
+  // 削除前後で配列の数が変わっていれば成功
+  if (diaries.length < initialLength) {
+    res.json({message: '日記を削除しました！'});
+  } else {
+    // もし指定されたIDが見つからなかった場合
+    res.status(404).json({ message: '指定された日記が見つかりませんでした。' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log( `Server is running on http://localhost:${PORT}`);
 });

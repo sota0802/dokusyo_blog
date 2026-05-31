@@ -85,8 +85,18 @@ async function fetchDiaries() {
           <span style="color: #ffcc00;">${stars}</span>
         </p>
         <p class="diary-content">${diary.content}</p>
+        <button class="btn btn-delete" data-id="${diary.id}">この日記を削除する</button>
         <hr>
       `;
+      // 2. 作成した削除ボタンに対して、クリックされたときのイベントを設定する
+      const deleteBtn = diaryItem.querySelector('.btn-delete');
+      deleteBtn.addEventListener('click', () => {
+        // 確認ダイアログを出して、OKなら削除関数を呼び出す
+        if (confirm(`「${diary.title}」の日記を削除してもよろしいですか？`)) {
+          deleteDiary(diary.id);
+        }
+      });
+
 
       // 画面のリストに追加する
       listContainer.appendChild(diaryItem);
@@ -94,5 +104,29 @@ async function fetchDiaries() {
 
   } catch (error) {
     console.error('データの取得に失敗しました:', error);
+  }
+}
+
+//サーバーに削除リクエストを送る関数
+async function deleteDiary(id) {
+  try {
+    // URLの末尾に削除したいIDを付与して、DELETEメソッドで通信する
+    const response = await fetch(`/api/diaries/${id}`, {
+      method: 'DELETE'
+    });
+
+    if (!response.ok) {
+      throw new Error('削除に失敗しました');
+    }
+
+    const result = await response.json();
+    alert(result.message);
+
+    // 削除が成功したので、画面の一覧を最新状態に更新する
+    fetchDiaries();
+
+  } catch (error) {
+    console.log('データの削除に失敗しました:', error);
+    alert('エラーが発生しました');
   }
 }
